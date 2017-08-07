@@ -20,12 +20,17 @@ function setup() {
   let thrownDisplay = createP("Thrown so far: 0");
 
   let approximationDisplay = createP("π approximation: 0");
+  createP(`Actual π: ${Math.PI}`);
 
   butt.mousePressed(() => {
-    for (let i = 0, l = slider.value(); i < l; ++i) throwDart();
-    thrownDisplay.html("Thrown so far: " + darts.length);
-    approximationDisplay.html("π approximation: " + approximatePi());
-    draw();
+    const dartsToThrow = slider.value();
+
+    if (dartsToThrow > 0) {
+      for (let i = 0; i < dartsToThrow; ++i) throwDart();
+      thrownDisplay.html("Thrown so far: " + darts.length);
+      approximationDisplay.html("π approximation: " + approximatePi());
+      draw();
+    }
   });
 
   slider.input(() => sliderDisplay.html("Darts to throw: " + zfill(slider.value(), sliderDigits)));

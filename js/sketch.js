@@ -15,10 +15,13 @@ function setup() {
   let sliderDisplay = createSpan(`Darts to throw: ${zfill(sliderValue / 2, sliderDigits)}`);
   let slider = createSlider(0, sliderValue, sliderValue / 2, 5);
 
+  let thrownDisplay = createP("Thrown so far: 0");
+
   let approximationDisplay = createP("π approximation: 0");
 
   butt.mousePressed(() => {
     for (let i = 0, l = slider.value(); i < l; ++i) throwDart();
+    thrownDisplay.html("Thrown so far: " + darts.length);
     approximationDisplay.html("π approximation: " + approximatePi());
     draw();
   });

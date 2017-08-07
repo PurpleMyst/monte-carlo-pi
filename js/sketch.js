@@ -1,11 +1,13 @@
 /* jshint browser: true, esnext: true */
 
+const SQUARE_SIDE = 256;
+
+// TODO: Remove duplicates.
 let darts = [];
 
 function setup() {
-  createCanvas(256, 256);
+  createCanvas(SQUARE_SIDE, SQUARE_SIDE);
   noLoop();
-  console.assert(width == height, "Canvas was not a square!");
 
   let butt = createButton("Throw dart");
   butt.style("display", "block");
@@ -34,20 +36,20 @@ function setup() {
 function draw() {
   background(0);
 
-  stroke(255);
-  strokeWeight(1);
-  darts.forEach(([x, y]) => {
-    point(x, y);
-  });
+  loadPixels();
+  for (let [x, y] of darts) {
+    set(x, y, 255);
+  }
+  updatePixels();
 
   stroke(255, 0, 0);
   strokeWeight(2);
   noFill();
-  ellipse(width / 2, height / 2, width);
+  ellipse(SQUARE_SIDE / 2, SQUARE_SIDE / 2, SQUARE_SIDE);
 }
 
 function throwDart() {
-  darts.push([random(width), random(height)]);
+  darts.push([random(SQUARE_SIDE), random(SQUARE_SIDE)]);
 }
 
 function approximatePi() {
@@ -55,7 +57,7 @@ function approximatePi() {
 
   for (let i = darts.length - 1; i >= 0; --i) {
     const [x, y] = darts[i];
-    if (dist(width / 2, height / 2, x, y) <= width / 2) totalHit += 1;
+    if (dist(SQUARE_SIDE / 2, SQUARE_SIDE / 2, x, y) <= SQUARE_SIDE / 2) totalHit += 1;
   }
 
   return (totalHit / darts.length) * 4;
